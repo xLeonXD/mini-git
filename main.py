@@ -2,12 +2,14 @@ import shutil as sh
 import os
 
 
-def commit_single(file: str) -> bool:
+def commit_single(file: str,gitname: str) -> bool:
     try:
-        os.makedirs("mini_git/commit", exist_ok=True)
-        sh.copy2(file,f"commit/{file}")
+        file_name = os.path.basename(file)
+        path = os.path.dirname(file)
+        os.makedirs(f"mini_git/commit/{gitname}/{path}", exist_ok=True)
+        sh.copy2(file,f"mini_git/commit/{gitname}/{path}/{file_name}")
         print("File copied successfully")
-        return True 
+        return True
     except FileNotFoundError:
         print("Source file not found")
         return False
