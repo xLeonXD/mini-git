@@ -6,17 +6,15 @@ def create_table_commit() -> None:
         cursor.execute("CREATE TABLE IF NOT EXISTS commits("
                        "id INTEGER PRIMARY KEY,"
                        "message TEXT DEFAULT 'none',"
+                       "git_name TEXT NOT NULL,"
                        "timestamp TEXT DEFAULT CURRENT_TIMESTAMP"
                        ")")
 
-def insert_git_data(message: str = "") -> None:
+def insert_git_data(message: str,git_name: str) -> None:
     with sql.connect("git.db") as con:
         cursor = con.cursor()
-        cursor.execute("INSERT INTO commits (message) VALUES (?)",[message])
         try:
-            con.commit()
+            cursor.execute("INSERT INTO commits (message,git_name) VALUES (?,?)", [message, git_name])
         except Exception as err:
             print(f"ERROR : {err}")
             print("Rolling back!")
-            con.rollback()
-            
