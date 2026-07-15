@@ -1,13 +1,25 @@
 import shutil as sh
 import os
+import git_sqlite as sql
 
+"""
+TODO LIST :
 
-def commit_single(file: str,gitname: str) -> bool:
+add sqlite for list of commits
+
+change commit in a way that it makes a copy of each commit to save the old version
+
+"""
+
+def commit_single(file: str,gitname: str,message: str = "") -> bool:
     try:
+        git_id = sql.insert_git_data(message, gitname)
+        if git_id is None:
+           git_id = 1
         file_name = os.path.basename(file)
         path = os.path.dirname(file)
-        os.makedirs(f"mini_git/commit/{gitname}/{path}", exist_ok=True)
-        sh.copy2(file,f"mini_git/commit/{gitname}/{path}/{file_name}")
+        os.makedirs(f"mini_git/commit/{gitname}/{git_id}/{path}", exist_ok=True)
+        sh.copy2(file,f"mini_git/commit/{gitname}/{git_id}/{path}/{file_name}")
         print("File copied successfully")
         return True
     except FileNotFoundError:
@@ -37,3 +49,6 @@ def commit_whole(folder : str) -> bool:
         print(f"Error : {error}")
         return False
 
+#commit_single("mini_git/commit/banana/abc.txt","banana")
+#commit_whole("abc")
+sql.create_table_commit()
