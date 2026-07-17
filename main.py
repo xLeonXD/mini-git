@@ -5,15 +5,17 @@ import git_sqlite as sql
 """
 TODO LIST :
 
-add sqlite for list of commits
+add sqlite for list of commits DONE
 
-change commit in a way that it makes a copy of each commit to save the old version
+change commit in a way that it makes a copy of each commit to save the old version DONE
+
+get uploaded version
 
 """
 
 def commit_single(file: str,gitname: str,message: str = "") -> bool:
     try:
-        git_id = sql.insert_git_data(message, gitname)
+        git_id = sql.insert_git_data(message, gitname,1)
         if git_id is None:
            git_id = 1
         file_name = os.path.basename(file)
@@ -48,6 +50,12 @@ def commit_whole(folder : str) -> bool:
     except Exception as error:
         print(f"Error : {error}")
         return False
+
+def see_commit_history():
+    pass
+
+def load_commit():
+    pass
 
 #commit_single("mini_git/commit/banana/abc.txt","banana")
 #commit_whole("abc")
