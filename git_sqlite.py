@@ -30,3 +30,10 @@ def insert_git_data(message: str,git_name: str,commit_type: int,get_id: bool = T
         except Exception as err:
             print(f"ERROR : {err}")
             print("Rolling back!")
+
+def show_commits_history(amount: int = 10):
+    with sql.connect("git.db") as con:
+        cursor = con.cursor()
+        cursor.execute("SELECT * FROM commits ORDER BY id DESC")
+        items = cursor.fetchmany(amount)
+    return items
