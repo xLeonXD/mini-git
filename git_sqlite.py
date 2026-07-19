@@ -3,13 +3,13 @@ import sqlite3 as sql
 def create_table_commit() -> None:
     with sql.connect("git.db") as con:
         cursor = con.cursor()
-        cursor.execute("CREATE TABLE IF NOT EXISTS commits("
-                       "id INTEGER PRIMARY KEY,"
-                       "message TEXT DEFAULT 'none',"
-                       "git_name TEXT NOT NULL,"
-                       "git_commit_type TEXT NOT NULL "
-                       "timestamp TEXT DEFAULT CURRENT_TIMESTAMP"
-                       ")")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS commits(
+                       id INTEGER PRIMARY KEY,
+                       message TEXT DEFAULT 'none',
+                       git_name TEXT NOT NULL,
+                       git_commit_type TEXT NOT NULL,
+                       date_time DATETIME DEFAULT CURRENT_TIMESTAMP
+                       )""")
 
 def insert_git_data(message: str,git_name: str,commit_type: int,get_id: bool = True) -> int | None:
     with sql.connect("git.db") as con:
