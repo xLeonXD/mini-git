@@ -11,6 +11,10 @@ change commit in a way that it makes a copy of each commit to save the old versi
 
 get uploaded version
 
+add username to commits
+
+add accounts
+
 """
 
 def commit_single(file: str,gitname: str,message: str = "") -> bool:
@@ -52,7 +56,13 @@ def commit_whole(folder : str) -> bool:
         return False
 
 def see_commit_history():
-    pass
+    items = sql.show_commits_history()
+    if items is None:
+        print("No commits history found.")
+        return
+    for i in items:
+        print(i)
+    return
 
 def load_commit():
     pass
@@ -60,3 +70,7 @@ def load_commit():
 #commit_single("mini_git/commit/banana/abc.txt","banana")
 #commit_whole("abc")
 sql.create_table_commit()
+
+#commit_single("git_sqlite.py","b","initial commit")
+
+see_commit_history()
